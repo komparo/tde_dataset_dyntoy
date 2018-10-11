@@ -3,7 +3,7 @@ library(tidyr)
 library(purrr)
 
 design <- crossing(
-  differentially_expressed_rate = seq(0.1, 0.9, 0.1)
+  differentially_expressed_rate = seq(0.1, 0.9, 0.4)
 ) %>% 
   mutate(
     seed = row_number(),
