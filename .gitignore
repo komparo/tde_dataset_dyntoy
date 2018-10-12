@@ -1,3 +1,4 @@
 .snakemake
-data
+datasets
 design
+.Rproj.user

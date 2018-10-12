@@ -1,23 +1,23 @@
-rule all:
-  input: "data/datasets.csv"
+singularity: "docker://komparo/tde_dataset_dyntoy"
 
-rule list_datasets:
-  output: "data/datasets.csv"
-  input: dynamic("data/{dataset_id}/expression.csv")
-  script:
-    "scripts/list_datasets.R"
+rule all:
+  input: dynamic("datasets/{dataset_ix}/meta.yaml")
 
 rule generate_datasets:
   input:
-    "design/{dataset_id}.json"
+    "design/{dataset_ix}.json"
   output:
-    expression = "data/{dataset_id}/expression.csv"
+    meta = "datasets/{dataset_ix}/meta.yaml",
+    expression = "datasets/{dataset_ix}/expression.csv"
   script:
     "scripts/run.R"
     
-rule dataset_design_dyntoy:
+rule generate_design:
   output:
-    dynamic("design/{dataset_id}.json")
+    dynamic("design/{dataset_ix}.json")
   script:
     "scripts/create_design.R"
-    
+
+rule test:
+  input:
+    "datasets/1/meta.yaml"
