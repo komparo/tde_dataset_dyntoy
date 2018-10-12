@@ -25,6 +25,7 @@ install:
   - docker build --pull --cache-from ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO} --tag ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO} .
   - docker push ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO}
   - source travis_scripts/install_snakemake.sh
+  - source travis_scripts/install_singularity.sh
 after_install:
   - docker images
 
