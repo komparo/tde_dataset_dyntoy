@@ -17,11 +17,10 @@ env:
 # - build container
 # - install conda and snakemake
 before_install:
-  - docker pull myorg/myimage || true
+  - docker pull ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO} || true
   - git clone https://github.com/komparo/travis_scripts.git
 install:
   - docker build --pull --cache-from ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO} --tag ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO} .
-  - docker run ${DOCKERHUB_ORGANISATION}/${DOCKHERHUB_REPO}
   - source travis_scripts/install_snakemake.sh
 after_install:
   - docker images
