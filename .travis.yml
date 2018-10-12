@@ -4,10 +4,6 @@ python:
   - "3.6"
 services:
   - docker
-  
-cache:
-  directories:
-    - $HOME/miniconda
 
 # define docker image organisation and name, which should be the same as those in the snakefile
 # make sure $DOCKERHUB_USER and $DOCKER_PASSWORD as encrypted environment variables
