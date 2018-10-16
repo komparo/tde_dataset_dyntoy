@@ -29,6 +29,3 @@ calls <- list(
     design = design[1, ]
   )
 )
-
-
-calls$test$run()

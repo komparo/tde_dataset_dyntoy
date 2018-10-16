@@ -28,9 +28,9 @@ after_install:
   - docker images
 
 # script -------------------------------------------------------------------------------------
-# - run snakemake test rule
+# - run test rule
 script:
-  - R -e "print('hello')"
+  - R -e "source('workflow.R');calls$test$run()"
 
 # deploy -------------------------------------------------------------------------------------
 # - todo: send message to webhook for pull request in main repo
