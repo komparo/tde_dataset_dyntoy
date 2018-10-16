@@ -1,12 +1,10 @@
 dist: trusty
-language: python
-python:
-  - "3.6"
+language: R
 services:
   - docker
 
 # define docker image organisation and name, which should be the same as those in the snakefile
-# make sure $DOCKERHUB_USER and $DOCKER_PASSWORD as encrypted environment variables
+# make sure $DOCKERHUB_USER and $DOCKERHUB_PASSWORD as encrypted environment variables
 env:
   global:
     - DOCKERHUB_ORGANISATION=komparo
@@ -24,15 +22,15 @@ before_install:
 install:
   - docker build --pull --cache-from ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO} --tag ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO} .
   - docker push ${DOCKERHUB_ORGANISATION}/${DOCKERHUB_REPO}
-  - source travis_scripts/install_snakemake.sh
-  - source travis_scripts/install_singularity.sh
+  - R -e "install.packages('devtools')"
+  - R -e "devtools::install_github('komparo/certigo@devel')"
 after_install:
   - docker images
 
 # script -------------------------------------------------------------------------------------
 # - run snakemake test rule
 script:
-  - snakemake test --use-singularity
+  - R -e "print('hello')"
 
 # deploy -------------------------------------------------------------------------------------
 # - todo: send message to webhook for pull request in main repo
