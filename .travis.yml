@@ -30,7 +30,7 @@ after_install:
 # script -------------------------------------------------------------------------------------
 # - run test rule
 script:
-  - R -e "source('workflow.R');calls$test$run()"
+  - Rscript test.R
 
 # deploy -------------------------------------------------------------------------------------
 # - todo: send message to webhook for pull request in main repo

@@ -9,23 +9,13 @@ design <- crossing(
     ix = as.character(row_number())
   )
 
-calls <- list(
-  run = rscript_call(
-    "generate_dataset",
-    script_file("scripts/run.R"),
-    outputs = list(
-      expression = derived_file(str_glue("datasets/{ix}/expression.csv")),
-      meta = derived_file(str_glue("datasets/{ix}/meta.yml"))
-    ),
-    design = design
+generate_datasets <- rscript_call(
+  "generate_datasets",
+  script_file("scripts/run.R"),
+  outputs = list(
+    expression = derived_file(str_glue("datasets/{ix}/expression.csv")),
+    meta = derived_file(str_glue("datasets/{ix}/meta.yml"))
   ),
-  test = rscript_call(
-    "generate_dataset",
-    script_file("scripts/run.R"),
-    outputs = list(
-      expression = derived_file(str_glue("datasets/{ix}/expression.csv")),
-      meta = derived_file(str_glue("datasets/{ix}/meta.yml"))
-    ),
-    design = design[1, ]
-  )
+  design = design,
+  executor = docker_executor("komparo/tde_datasets_dyntoy")
 )
