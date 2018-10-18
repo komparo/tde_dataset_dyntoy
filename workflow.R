@@ -13,12 +13,12 @@ design <- crossing(
     id = as.character(row_number())
   )
 
-generate_datasets_expression <- rlang::expr(rscript_call(
+generate_datasets_expression <- rlang::quo(rscript_call(
   "generate_datasets",
-  script_file(str_glue("{workflow_location}/scripts/run.R")),
+  script_file(str_glue("{workflow_folder}/scripts/run.R")),
   outputs = list(
-    expression = derived_file(str_glue("{output_location}/datasets/{id}/expression.csv")),
-    meta = derived_file(str_glue("{output_location}/datasets/{id}/meta.yml"))
+    expression = derived_file(str_glue("{datasets_folder}/{id}/expression.csv")),
+    meta = derived_file(str_glue("{datasets_folder}/{id}/meta.yml"))
   ),
   design = design,
   params = params,
