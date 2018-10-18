@@ -22,5 +22,5 @@ generate_datasets_expression <- rlang::quo(rscript_call(
   ),
   design = design,
   params = params,
-  executor = docker_executor("komparo/tde_datasets_dyntoy")
+  executor = docker_executor("komparo/tde_dataset_dyntoy")
 ))
