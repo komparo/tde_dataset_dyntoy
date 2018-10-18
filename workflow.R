@@ -1,5 +1,8 @@
 library(certigo)
-library(tidyverse)
+
+# installed together with certigo
+library(tidyr)
+library(stringr)
 
 design <- crossing(
   differentially_expressed_rate = seq(0.1, 0.9, 0.1)
