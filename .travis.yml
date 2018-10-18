@@ -2,6 +2,8 @@ dist: trusty
 language: R
 services:
   - docker
+cache:
+  - packages
 
 # define docker image organisation and name, which should be the same as those in the snakefile
 # make sure $DOCKERHUB_USER and $DOCKERHUB_PASSWORD as encrypted environment variables
