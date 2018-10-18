@@ -24,17 +24,3 @@ generate_datasets_expression <- rlang::expr(rscript_call(
   params = params,
   executor = docker_executor("komparo/tde_datasets_dyntoy")
 ))
-
-
-
-#
-# call <- rlang::eval_tidy(
-#   generate_datasets_expression, 
-#   data = list(
-#     design = design, 
-#     params = list(workflow_location = ".", output_location = ".")
-#   )
-# )
-# call
-# 
-# call$start_and_wait()
