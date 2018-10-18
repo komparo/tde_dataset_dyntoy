@@ -10,16 +10,31 @@ design <- crossing(
 ) %>% 
   mutate(
     seed = row_number(),
-    ix = as.character(row_number())
+    id = as.character(row_number())
   )
 
-generate_datasets <- rscript_call(
+generate_datasets_expression <- rlang::expr(rscript_call(
   "generate_datasets",
-  script_file("scripts/run.R"),
+  script_file(str_glue("{workflow_location}/scripts/run.R")),
   outputs = list(
-    expression = derived_file(str_glue("datasets/{ix}/expression.csv")),
-    meta = derived_file(str_glue("datasets/{ix}/meta.yml"))
+    expression = derived_file(str_glue("{output_location}/datasets/{id}/expression.csv")),
+    meta = derived_file(str_glue("{output_location}/datasets/{id}/meta.yml"))
   ),
   design = design,
+  params = params,
   executor = docker_executor("komparo/tde_datasets_dyntoy")
-)
+))
+
+
+
+#
+# call <- rlang::eval_tidy(
+#   generate_datasets_expression, 
+#   data = list(
+#     design = design, 
+#     params = list(workflow_location = ".", output_location = ".")
+#   )
+# )
+# call
+# 
+# call$start_and_wait()

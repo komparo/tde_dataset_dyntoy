@@ -1,2 +1,10 @@
 source('workflow.R')
-generate_datasets$calls[[1]]$start_and_wait()
+
+call <- rlang::eval_tidy(
+  generate_datasets_expression,
+  data = list(
+    design = design[1, ],
+    params = list(workflow_location = ".", output_location = ".")
+  )
+)
+call$start_and_wait()
