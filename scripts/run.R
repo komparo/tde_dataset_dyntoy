@@ -3,7 +3,7 @@ library(readr)
 library(dplyr)
 
 # read parameters
-design <- jsonlite::fromJSON(inputs["parameters"])
+design <- jsonlite::fromJSON(inputs["design"])
 testthat::expect_true(all(names(design) %in% c("seed", "ix", names(formals(dyntoy::generate_dataset)))))
 set.seed(design$seed)
 

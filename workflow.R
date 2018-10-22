@@ -20,7 +20,7 @@ generate_datasets_expression <- rlang::quo(
     inputs = tibble(
       script = list(script_file(str_glue("{workflow_folder}/scripts/run.R"))),
       executor = list(docker_executor("komparo/tde_dataset_dyntoy")),
-      parameters = design %>% dynutils::mapdf(parameters)
+      design = design %>% dynutils::mapdf(parameters)
     ),
     outputs = design %>% 
       transmute(
