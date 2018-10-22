@@ -4,6 +4,7 @@ library(certigo)
 library(tidyr)
 library(stringr)
 library(dplyr)
+library(purrr)
 
 design <- crossing(
   differentially_expressed_rate = seq(0.1, 0.9, 0.1)
@@ -13,14 +14,18 @@ design <- crossing(
     id = as.character(row_number())
   )
 
-generate_datasets_expression <- rlang::quo(rscript_call(
-  "generate_datasets",
-  script_file(str_glue("{workflow_folder}/scripts/run.R")),
-  outputs = list(
-    expression = derived_file(str_glue("{output_folder}/{id}/expression.csv")),
-    meta = derived_file(str_glue("{output_folder}/{id}/meta.yml"))
-  ),
-  design = design,
-  params = params,
-  executor = docker_executor("komparo/tde_dataset_dyntoy")
-))
+generate_datasets_expression <- rlang::quo(
+  rscript_call(
+    "generate_datasets",
+    inputs = tibble(
+      script = list(script_file(str_glue("{workflow_folder}/scripts/run.R"))),
+      executor = list(docker_executor("komparo/tde_dataset_dyntoy")),
+      parameters = design %>% dynutils::mapdf(parameters)
+    ),
+    outputs = design %>% 
+      transmute(
+        expression = str_glue("{datasets_folder}/{id}/expression.csv") %>% map(derived_file),
+        meta = str_glue("{datasets_folder}/{id}/meta.yml") %>% map(derived_file)
+      )
+  )
+)
