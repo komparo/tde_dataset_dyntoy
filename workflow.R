@@ -17,6 +17,7 @@ design <- crossing(
 generate_datasets_expression <- rlang::quo(
   rscript_call(
     "generate_datasets",
+    design = design,
     inputs = tibble(
       script = list(script_file(str_glue("{workflow_folder}/scripts/run.R"))),
       executor = list(docker_executor("komparo/tde_dataset_dyntoy")),
