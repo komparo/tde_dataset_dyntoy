@@ -6,7 +6,7 @@ library(stringr)
 library(dplyr)
 library(purrr)
 
-design <- crossing(
+dataset_design <- crossing(
   differentially_expressed_rate = seq(0.1, 0.9, 0.1)
 ) %>% 
   mutate(
@@ -14,19 +14,19 @@ design <- crossing(
     id = as.character(row_number())
   )
 
-generate_datasets_expression <- rlang::quo(
+generate_dataset_calls <- function(dataset_design = dataset_design, workflow_folder = ".", datasets_folder = ".") {
   rscript_call(
-    "generate_datasets",
-    design = design,
+    "komparo/dyntoy",
+    design = dataset_design,
     inputs = tibble(
       script = list(script_file(str_glue("{workflow_folder}/scripts/run.R"))),
       executor = list(docker_executor("komparo/tde_dataset_dyntoy")),
-      design = design %>% dynutils::mapdf(parameters)
+      design = dataset_design %>% dynutils::mapdf(parameters)
     ),
-    outputs = design %>% 
+    outputs = dataset_design %>% 
       transmute(
         expression = str_glue("{datasets_folder}/{id}/expression.csv") %>% map(derived_file),
         meta = str_glue("{datasets_folder}/{id}/meta.yml") %>% map(derived_file)
       )
   )
-)
+}
