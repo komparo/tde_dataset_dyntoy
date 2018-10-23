@@ -6,7 +6,7 @@ library(stringr)
 library(dplyr)
 library(purrr)
 
-dataset_design <- crossing(
+dataset_design_all <- crossing(
   differentially_expressed_rate = seq(0.1, 0.9, 0.1)
 ) %>% 
   mutate(
@@ -14,7 +14,7 @@ dataset_design <- crossing(
     id = as.character(row_number())
   )
 
-generate_dataset_calls <- function(dataset_design = dataset_design, workflow_folder = ".", datasets_folder = ".") {
+generate_dataset_calls <- function(dataset_design = dataset_design_all, workflow_folder = ".", datasets_folder = ".") {
   rscript_call(
     "komparo/dyntoy",
     design = dataset_design,
