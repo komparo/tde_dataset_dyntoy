@@ -7,9 +7,10 @@ library(dplyr)
 library(purrr)
 
 dataset_design_all <- crossing(
-  differentially_expressed_rate = seq(0.1, 0.9, 0.1)
+  differentially_expressed_rate = seq(0.1, 0.9, 0.2)
 ) %>% 
   mutate(
+    num_cells = runif(n(), 10, 1000),
     seed = row_number(),
     id = as.character(row_number())
   )
