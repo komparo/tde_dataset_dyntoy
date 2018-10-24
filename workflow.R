@@ -6,6 +6,8 @@ library(stringr)
 library(dplyr)
 library(purrr)
 
+set.seed(1)
+
 dataset_design_all <- crossing(
   differentially_expressed_rate = seq(0.1, 0.9, 0.2)
 ) %>% 
