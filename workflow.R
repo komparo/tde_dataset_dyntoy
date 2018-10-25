@@ -20,16 +20,16 @@ dataset_design_all <- crossing(
 generate_dataset_calls <- function(dataset_design = dataset_design_all, workflow_folder = ".", datasets_folder = ".") {
   rscript_call(
     "komparo/dyntoy",
-    design = dataset_design,
-    inputs = tibble(
-      script = list(script_file(str_glue("{workflow_folder}/scripts/run.R"))),
-      executor = list(docker_executor("komparo/tde_dataset_dyntoy")),
-      design = dataset_design %>% dynutils::mapdf(parameters)
-    ),
-    outputs = dataset_design %>% 
-      transmute(
+    design = dataset_design %>% 
+      mutate(
+        script = list(script_file(str_glue("{workflow_folder}/scripts/run.R"))),
+        executor = list(docker_executor("komparo/tde_dataset_dyntoy")),
+        parameters = dataset_design %>% dynutils::mapdf(parameters),
+        
         expression = str_glue("{datasets_folder}/{id}/expression.csv") %>% map(derived_file),
         meta = str_glue("{datasets_folder}/{id}/meta.yml") %>% map(derived_file)
-      )
+      ),
+    inputs = c("script", "executor", "parameters"),
+    outputs = c("expression", "meta")
   )
 }

@@ -3,12 +3,12 @@ library(readr)
 library(dplyr)
 
 # read parameters
-design <- jsonlite::fromJSON(inputs[["design"]])
-testthat::expect_true(all(names(design) %in% c("seed", "ix", names(formals(dyntoy::generate_dataset)))))
-set.seed(design$seed)
+parameters <- jsonlite::fromJSON(inputs[["parameters"]])
+testthat::expect_true(all(names(parameters) %in% c("seed", "ix", names(formals(dyntoy::generate_dataset)))))
+set.seed(parameters$seed)
 
 # generate datasets
-dataset <- purrr::invoke(dyntoy::generate_dataset, design[intersect(names(design), names(formals(dyntoy::generate_dataset)))])
+dataset <- purrr::invoke(dyntoy::generate_dataset, parameters[intersect(names(parameters), names(formals(dyntoy::generate_dataset)))])
 
 # write dataset
 write.csv(dataset$expression, outputs[["expression"]])
