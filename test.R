@@ -1,9 +1,8 @@
-source('workflow.R')
+library(certigo)
 
-call <- generate_dataset_calls(
-  workflow_folder = ".",
-  datasets_folder = "./datasets",
-  dataset_design = dataset_design_all[1, ]
+datasets <- load_call(
+  "workflow.R",
+  derived_file_directory = "datasets"
 )
-call$start_and_wait()
-
+datasets$design <- datasets$design[1, ]
+datasets$start_and_wait()
