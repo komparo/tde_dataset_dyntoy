@@ -18,7 +18,6 @@ get_call <- function() {
     )
   
   rscript_call(
-    "komparo/dyntoy",
     design = dataset_design %>% 
       mutate(
         script = list(script_file("scripts/run.R")),
