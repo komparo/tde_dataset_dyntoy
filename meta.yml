@@ -1,6 +1,6 @@
 authors:
   - name: Wouter Saelens
-    roles:
+    contributions:
       - Conceptualization
       - Methodology
       - Software
@@ -8,7 +8,7 @@ authors:
     github: zouter
     email: wouter.saelens@gmail.com
   - name: Robrecht Cannoodt
-    roles:
+    contributions:
       - Conceptualization
       - Methodology
       - Software
