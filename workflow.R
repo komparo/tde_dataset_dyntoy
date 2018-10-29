@@ -25,9 +25,12 @@ get_call <- function() {
         parameters = dataset_design %>% dynutils::mapdf(parameters),
         
         expression = str_glue("{id}/expression.csv") %>% map(derived_file),
+        
+        tde_overall = str_glue("{id}/tde_overall.csv") %>% map(derived_file),
+        
         meta = str_glue("{id}/meta.yml") %>% map(derived_file)
       ),
-    inputs = c("script", "executor", "parameters"),
-    outputs = c("expression", "meta")
+    inputs = exprs(script, executor, parameters),
+    outputs = exprs(expression, tde_overall, meta)
   )
 }
