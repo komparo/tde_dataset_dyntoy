@@ -14,7 +14,7 @@ dataset <- purrr::invoke(dyntoy::generate_dataset, parameters[intersect(names(pa
 write.csv(dataset$expression, outputs[["expression"]])
 
 # write differential expression
-write_csv(dataset$tde_overall, outputs[["tde_overall"]])
+write_csv(dataset$tde_overall, outputs[["tde_overall"]] %>% rename(tde_overall = differentially_expressed))
 
 # generate metadata
 metadata <- list(
