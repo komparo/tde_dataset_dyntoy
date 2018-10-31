@@ -1,4 +1,5 @@
 library(certigo)
+library(tdeformats)
 
 # installed together with certigo
 library(tidyr)
@@ -24,7 +25,7 @@ get_call <- function() {
         executor = list(docker_executor("komparo/tde_dataset_dyntoy")),
         parameters = dataset_design %>% dynutils::mapdf(parameters),
         
-        expression = str_glue("{id}/expression.csv") %>% map(derived_file),
+        expression = str_glue("{id}/expression.csv") %>% map(tdeformats::gene_expression),
         
         tde_overall = str_glue("{id}/tde_overall.csv") %>% map(derived_file),
         
