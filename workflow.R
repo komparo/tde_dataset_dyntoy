@@ -1,5 +1,4 @@
-library(certigo)
-library(tdeformats)
+library(tde)
 
 # installed together with certigo
 library(tidyr)
