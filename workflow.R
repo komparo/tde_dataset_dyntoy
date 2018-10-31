@@ -1,4 +1,5 @@
 library(tde)
+library(certigo)
 
 # installed together with certigo
 library(tidyr)
