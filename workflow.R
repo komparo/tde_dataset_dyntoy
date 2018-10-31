@@ -24,13 +24,12 @@ get_call <- function() {
         executor = list(docker_executor("komparo/tde_dataset_dyntoy")),
         parameters = dataset_design %>% dynutils::mapdf(parameters),
         
-        expression = str_glue("{id}/expression.csv") %>% map(tdeformats::gene_expression),
-        
-        tde_overall = str_glue("{id}/tde_overall.csv") %>% map(derived_file),
+        gene_expression = str_glue("{id}/gene_expression.csv") %>% map(tdeformats::gene_expression),
+        tde_overall = str_glue("{id}/tde_overall.csv") %>% map(tdeformats::tde_overall),
         
         meta = str_glue("{id}/meta.yml") %>% map(derived_file)
       ),
     inputs = exprs(script, executor, parameters),
-    outputs = exprs(expression, tde_overall, meta)
+    outputs = exprs(gene_expression, tde_overall, meta)
   )
 }

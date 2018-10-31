@@ -11,13 +11,13 @@ set.seed(parameters$seed)
 dataset <- purrr::invoke(dyntoy::generate_dataset, parameters[intersect(names(parameters), names(formals(dyntoy::generate_dataset)))])
 
 # write dataset
-write.csv(dataset$expression, outputs[["expression"]])
+write.csv(dataset$expression, outputs[["gene_expression"]])
 
 # write differential expression
 write_csv(dataset$tde_overall %>% rename(tde_overall = differentially_expressed), outputs[["tde_overall"]])
 
 # generate metadata
 metadata <- list(
-  provides_expression = TRUE
+  do_we_have_metadata_yet = FALSE
 )
 yaml::write_yaml(metadata, outputs[["meta"]])
