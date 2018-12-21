@@ -3,7 +3,7 @@ library(readr)
 library(dplyr)
 
 # read parameters
-parameters <- jsonlite::fromJSON(inputs[["parameters"]])
+parameters <- jsonlite::fromJSON(inputs$design)
 testthat::expect_true(all(names(parameters) %in% c("seed", "ix", names(formals(dyntoy::generate_dataset)))))
 set.seed(parameters$seed)
 
@@ -20,4 +20,4 @@ write_csv(dataset$tde_overall %>% rename(significant = differentially_expressed)
 metadata <- list(
   do_we_have_metadata_yet = FALSE
 )
-yaml::write_yaml(metadata, outputs[["meta"]])
+jsonlite::write_json(metadata, outputs[["metadata"]])

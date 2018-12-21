@@ -1,14 +1,30 @@
 type: dataset_generator
-design@R: |
-  crossing(
-    differentially_expressed_rate = seq(0.1, 0.9, 0.2)
-  ) %>% 
-    mutate(
-      num_cells = runif(n(), 10, 1000),
-      seed = row_number(),
-      id = as.character(row_number())
-    )
-output:
-  - expression
-  - tde_overall
-  - meta
+
+design:
+    script: scripts/design.R
+
+generate:
+    script: scripts/run.R
+    output:
+    - expression
+    - tde_overall
+    - metadata
+
+metadata:
+  authors:
+    - name: Wouter Saelens
+      contributions:
+        - Conceptualization
+        - Methodology
+        - Software
+      orcid: 0000-0002-7114-6248
+      github: zouter
+      email: wouter.saelens@gmail.com
+    - name: Robrecht Cannoodt
+      contributions:
+        - Conceptualization
+        - Methodology
+        - Software
+      orcid: 0000-0003-3641-729X
+      github: rcannood
+  license: GPL-3
