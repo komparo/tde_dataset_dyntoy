@@ -12,6 +12,7 @@ process dataset_komparo_dyntoy_design {
   file '*.json' into design mode flatten
 
   cache 'deep'
+  container 'komparo/tde_dataset_dyntoy'
   
   """
   #! /usr/bin/env Rscript
@@ -39,6 +40,7 @@ process dataset_komparo_dyntoy_generate {
   publishDir 'datasets/komparo/dyntoy/'
   errorStrategy 'ignore'
   cache 'deep'
+  container 'komparo/tde_dataset_dyntoy'
   
   """
   #! /usr/bin/env Rscript
@@ -67,7 +69,6 @@ process dataset_komparo_dyntoy_validate {
 
   output:
   stdout stdout
-
   cache 'deep'
 
   """
