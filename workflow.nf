@@ -64,25 +64,24 @@ datasets = gene_expression.merge(tde_overall, metadata) {a, b, c -> [gene_expres
 /* Validate dataset */
 process dataset_komparo_dyntoy_validate {
   input:
-  file "script.R" from Channel.fromPath('scripts/validate.R').first()
+  file "script.py" from Channel.fromPath('scripts/validate.py').first()
   set file("gene_expression.csv"), file("tde_overall.csv"), file("metadata.json") from datasets
 
   output:
   stdout stdout
   cache 'deep'
+  container 'komparo/tde'
 
   """
-  #! /usr/bin/env Rscript
+  #! /usr/bin/env python
 
-  set.seed(1)
-  options(error=function()traceback(2))
+  inputs = {
+    "gene_expression": "gene_expression.csv",
+    "tde_overall": "tde_overall.csv",
+    "metadata": "metadata.json"
+  }
 
-  inputs <- list(
-    gene_expression = "gene_expression.csv",
-    tde_overall = "tde_overall.csv",
-    metadata = "metadata.json"
-  )
-
-  source("script.R")
+  import runpy
+  file_globals = runpy.run_path("script.py")
   """
 }
